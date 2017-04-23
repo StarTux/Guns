@@ -74,15 +74,16 @@ public final class BlunderbussItem implements CustomItem, UncraftableItem {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerInteract(PlayerInteractEvent event, ItemContext context) {
-        event.setCancelled(true);
         switch (event.getAction()) {
         case PHYSICAL: return;
-        case LEFT_CLICK_BLOCK:
+        case LEFT_CLICK_BLOCK: return;
         case LEFT_CLICK_AIR:
+            event.setCancelled(true);
             shoot(context.getPlayer(), context.getItemStack());
             break;
         case RIGHT_CLICK_BLOCK:
         case RIGHT_CLICK_AIR:
+            event.setCancelled(true);
             reload(context.getPlayer(), context.getItemStack());
             break;
         default: return;
