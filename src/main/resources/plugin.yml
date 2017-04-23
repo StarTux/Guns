@@ -1,0 +1,8 @@
+name: Guns
+description: Guns in Minecraft
+author: StarTux
+version: 0.1
+main: com.winthier.guns.GunsPlugin
+depend: [ Custom, GenericEvents ]
+commands: {}
+permissions: {}
