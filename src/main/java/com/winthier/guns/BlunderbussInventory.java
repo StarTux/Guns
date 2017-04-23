@@ -16,7 +16,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 @Getter
-public class BlunderbussInventory implements CustomInventory {
+public final class BlunderbussInventory implements CustomInventory {
     private final GunsPlugin plugin;
     private final Player player;
     private final ItemStack itemStack;
@@ -75,7 +75,7 @@ public class BlunderbussInventory implements CustomInventory {
             config.setString(BlunderbussItem.KEY_TYPE, type.name());
             Msg.sendActionBar(player, "&a%d bullets stored", amount);
             new BukkitRunnable() {
-                int i = 0;
+                private int i = 0;
                 @Override public void run() {
                     if (!player.isValid()) {
                         cancel();

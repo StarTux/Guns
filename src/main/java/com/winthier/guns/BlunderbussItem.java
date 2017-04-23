@@ -27,11 +27,9 @@ import org.bukkit.entity.Projectile;
 import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
@@ -39,7 +37,7 @@ import org.bukkit.util.BlockIterator;
 import org.bukkit.util.Vector;
 
 @Getter
-public class BlunderbussItem implements CustomItem, UncraftableItem {
+public final class BlunderbussItem implements CustomItem, UncraftableItem {
     private final GunsPlugin plugin;
     public static final String CUSTOM_ID = "guns:blunderbuss";
     private final String customId = CUSTOM_ID;
@@ -87,13 +85,8 @@ public class BlunderbussItem implements CustomItem, UncraftableItem {
         case RIGHT_CLICK_AIR:
             reload(context.getPlayer(), context.getItemStack());
             break;
+        default: return;
         }
-    }
-
-    @EventHandler(priority = EventPriority.LOWEST)
-    public void onPlayerInteractEntity(PlayerInteractEntityEvent event, ItemContext context) {
-        event.setCancelled(true);
-        reload(context.getPlayer(), context.getItemStack());
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -122,6 +115,7 @@ public class BlunderbussItem implements CustomItem, UncraftableItem {
         case IRON_NUGGET:
         case GOLD_NUGGET:
             return shootRay(player, type);
+        default: break;
         }
         return true;
     }
@@ -221,8 +215,6 @@ public class BlunderbussItem implements CustomItem, UncraftableItem {
                 oldBlock.getWorld().spawnParticle(Particle.SPELL, oldBlock.getLocation().add(0.5, 0.5, 0.5), 1, 0, 0, 0, 0);
             }
             oldBlock = newBlock;
-        }
-        if (oldBlock != null) {
         }
         return false;
     }
