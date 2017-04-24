@@ -156,10 +156,10 @@ public final class BlunderbussItem implements CustomItem, UncraftableItem {
                 double damageAmount;
                 double knockbackAmount;
                 if (type == AmmoType.GOLD_NUGGET) {
-                    damageAmount = 20.0;
+                    damageAmount = 8.0;
                     knockbackAmount = 4.0;
                 } else {
-                    damageAmount = 5.0;
+                    damageAmount = 4.0;
                     knockbackAmount = 2.0;
                 }
                 e.setVelocity(e.getVelocity().add(velo.normalize().multiply(knockbackAmount)));
