@@ -94,20 +94,23 @@ public final class BlunderbussInventory implements CustomInventory {
                 }
             }.runTaskTimer(plugin, 0, 2);
         } else {
-            Msg.sendActionBar(player, "&cNo bullets stored", amount);
+            Msg.sendActionBar(player, "&cNo bullets stored");
             player.getWorld().playSound(player.getEyeLocation(), Sound.BLOCK_DISPENSER_FAIL, SoundCategory.MASTER, 1.0f, 0.65f);
-        }
-        // Drop all remaining items
-        for (ItemStack item: inventory) {
-            if (item != null && item.getAmount() > 0) {
-                player.getWorld().dropItem(player.getEyeLocation(), item).setPickupDelay(0);
-            }
         }
     }
 
     @Override
     public void onInventoryClose(InventoryCloseEvent event) {
-        loadItems();
+        if (itemStack.getAmount() == 1) {
+            loadItems();
+        } else {
+            Msg.sendActionBar(player, "&cNo bullets stored");
+        }
+        for (ItemStack item: inventory) {
+            if (item != null && item.getAmount() > 0) {
+                player.getWorld().dropItem(player.getEyeLocation(), item).setPickupDelay(0);
+            }
+        }
     }
 
     @Override
