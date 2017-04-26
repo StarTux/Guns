@@ -6,6 +6,7 @@ import com.winthier.custom.item.ItemContext;
 import com.winthier.custom.item.ItemDescription;
 import com.winthier.custom.item.UncraftableItem;
 import com.winthier.custom.util.Dirty;
+import com.winthier.custom.util.Msg;
 import com.winthier.generic_events.GenericEventsPlugin;
 import com.winthier.generic_events.ItemNameEvent;
 import java.util.ArrayList;
@@ -79,12 +80,20 @@ public final class BlunderbussItem implements CustomItem, UncraftableItem {
         case LEFT_CLICK_BLOCK: return;
         case LEFT_CLICK_AIR:
             event.setCancelled(true);
-            shoot(context.getPlayer(), context.getItemStack());
+            if (context.getItemStack().getAmount() != 1) {
+                Msg.sendActionBar(context.getPlayer(), "&cUnstack the blunderbuss first!");
+            } else {
+                shoot(context.getPlayer(), context.getItemStack());
+            }
             break;
         case RIGHT_CLICK_BLOCK:
         case RIGHT_CLICK_AIR:
             event.setCancelled(true);
-            reload(context.getPlayer(), context.getItemStack());
+            if (context.getItemStack().getAmount() != 1) {
+                Msg.sendActionBar(context.getPlayer(), "&cUnstack the blunderbuss first!");
+            } else {
+                reload(context.getPlayer(), context.getItemStack());
+            }
             break;
         default: return;
         }
