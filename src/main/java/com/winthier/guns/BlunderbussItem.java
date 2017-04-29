@@ -184,6 +184,7 @@ public final class BlunderbussItem implements CustomItem, UncraftableItem {
                         unbreakable = type != AmmoType.GOLD_NUGGET;
                         break;
                     case BEDROCK:
+                    case BARRIER:
                         unbreakable = true;
                         break;
                     default:
