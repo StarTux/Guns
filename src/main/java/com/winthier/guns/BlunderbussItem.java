@@ -131,7 +131,7 @@ public final class BlunderbussItem implements CustomItem, UncraftableItem {
     }
 
     boolean shootRay(Player player, AmmoType type) {
-        player.getWorld().playSound(player.getEyeLocation(), Sound.ENTITY_GENERIC_EXPLODE, SoundCategory.PLAYERS, 2.0f, 1.7f);
+        player.getWorld().playSound(player.getEyeLocation(), Sound.ENTITY_GENERIC_EXPLODE, SoundCategory.PLAYERS, 0.3f, 1.7f);
         Vector velo = player.getLocation().getDirection();
         player.getWorld().spawnParticle(Particle.FLAME, player.getEyeLocation().add(velo.normalize().multiply(0.5)), 4, 0.2, 0.2, 0.2, 0.0);
         player.getWorld().spawnParticle(Particle.SMOKE_NORMAL, player.getEyeLocation().add(velo.normalize()), 8, 0.2, 0.2, 0.2, 0.0);
@@ -173,7 +173,7 @@ public final class BlunderbussItem implements CustomItem, UncraftableItem {
                 }
                 e.setVelocity(e.getVelocity().add(velo.normalize().multiply(knockbackAmount)));
                 e.damage(damageAmount);
-                e.getWorld().playSound(e.getEyeLocation(), Sound.ENTITY_GENERIC_EXPLODE, SoundCategory.PLAYERS, 2.0f, 1.2f);
+                e.getWorld().playSound(e.getEyeLocation(), Sound.ENTITY_GENERIC_EXPLODE, SoundCategory.PLAYERS, 0.3f, 1.2f);
                 return true;
             } else if (oldBlock != null && !newBlock.isLiquid() && newBlock.getType() != Material.AIR && newBlock.getType().isSolid()) {
                 if (GenericEventsPlugin.getInstance().playerCanGrief(player, newBlock)) {
@@ -218,7 +218,7 @@ public final class BlunderbussItem implements CustomItem, UncraftableItem {
                             newBlock.breakNaturally();
                         }
                     }
-                    newBlock.getWorld().playSound(newBlock.getLocation().add(0.5, 0.5, 0.5), Sound.ENTITY_GENERIC_EXPLODE, SoundCategory.PLAYERS, 2.0f, 1.2f);
+                    newBlock.getWorld().playSound(newBlock.getLocation().add(0.5, 0.5, 0.5), Sound.ENTITY_GENERIC_EXPLODE, SoundCategory.PLAYERS, 0.3f, 1.2f);
                     oldBlock.getWorld().spawnParticle(Particle.SMOKE_NORMAL, oldBlock.getLocation().add(0.5, 0.5, 0.5), 8, 0.2, 0.2, 0.2, 0.0);
                 }
                 return true;
@@ -233,7 +233,7 @@ public final class BlunderbussItem implements CustomItem, UncraftableItem {
     boolean shootProjectile(Player player, AmmoType type) {
         player.launchProjectile(type.projectile);
         Vector velo = player.getLocation().getDirection();
-        player.getWorld().playSound(player.getEyeLocation().add(velo.normalize()), Sound.ENTITY_GENERIC_EXPLODE, SoundCategory.MASTER, 1.0f, 2.0f);
+        player.getWorld().playSound(player.getEyeLocation().add(velo.normalize()), Sound.ENTITY_GENERIC_EXPLODE, SoundCategory.PLAYERS, 0.3f, 2.0f);
         player.getWorld().spawnParticle(Particle.SMOKE_NORMAL, player.getEyeLocation().add(velo.normalize()), 8, 0.2, 0.2, 0.2, 0.0);
         return true;
     }
@@ -305,7 +305,7 @@ public final class BlunderbussItem implements CustomItem, UncraftableItem {
     }
 
     boolean playOutOfAmmoEffect(Player player) {
-        player.playSound(player.getEyeLocation(), Sound.BLOCK_DISPENSER_FAIL, SoundCategory.MASTER, 2.0f, 1.7f);
+        player.playSound(player.getEyeLocation(), Sound.BLOCK_DISPENSER_FAIL, SoundCategory.PLAYERS, 0.5f, 1.7f);
         return true;
     }
 
