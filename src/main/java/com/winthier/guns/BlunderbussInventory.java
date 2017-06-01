@@ -11,9 +11,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
+import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitRunnable;
 
 @Getter
 public final class BlunderbussInventory implements CustomInventory {
@@ -74,29 +74,16 @@ public final class BlunderbussInventory implements CustomInventory {
             config.setInt(BlunderbussItem.KEY_AMMO, amount);
             config.setString(BlunderbussItem.KEY_TYPE, type.name());
             Msg.sendActionBar(player, "&a%d bullets stored", amount);
-            new BukkitRunnable() {
-                private int i = 0;
-                @Override public void run() {
-                    if (!player.isValid()) {
-                        cancel();
-                        return;
-                    }
-                    switch (i) {
-                    case 0:
-                        player.playSound(player.getEyeLocation(), Sound.BLOCK_DISPENSER_DISPENSE, SoundCategory.MASTER, 1.0f, 0.5f);
-                        break;
-                    case 1:
-                        player.playSound(player.getEyeLocation(), Sound.BLOCK_DISPENSER_DISPENSE, SoundCategory.MASTER, 1.0f, 0.6f);
-                    default: // fallthrough
-                        cancel();
-                    }
-                    i += 1;
-                }
-            }.runTaskTimer(plugin, 0, 2);
+            player.playSound(player.getEyeLocation(), Sound.BLOCK_IRON_DOOR_CLOSE, SoundCategory.MASTER, 0.8f, 1.5f);
         } else {
             Msg.sendActionBar(player, "&cNo bullets stored");
-            player.getWorld().playSound(player.getEyeLocation(), Sound.BLOCK_DISPENSER_FAIL, SoundCategory.MASTER, 1.0f, 0.65f);
+            player.playSound(player.getEyeLocation(), Sound.BLOCK_IRON_TRAPDOOR_CLOSE, SoundCategory.MASTER, 0.8f, 0.8f);
         }
+    }
+
+    @Override
+    public void onInventoryOpen(InventoryOpenEvent event) {
+        player.playSound(player.getEyeLocation(), Sound.BLOCK_IRON_DOOR_OPEN, SoundCategory.MASTER, 0.8f, 1.5f);
     }
 
     @Override
