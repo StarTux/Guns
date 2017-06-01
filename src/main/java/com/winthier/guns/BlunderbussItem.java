@@ -21,6 +21,7 @@ import org.bukkit.SoundCategory;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Egg;
+import org.bukkit.entity.EnderPearl;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -121,6 +122,7 @@ public final class BlunderbussItem implements CustomItem, UncraftableItem {
         case ARROW:
         case SNOW_BALL:
         case EGG:
+        case ENDER_PEARL:
             return shootProjectile(player, type);
         case IRON_NUGGET:
         case GOLD_NUGGET:
@@ -231,7 +233,7 @@ public final class BlunderbussItem implements CustomItem, UncraftableItem {
     }
 
     boolean shootProjectile(Player player, AmmoType type) {
-        player.launchProjectile(type.projectile);
+        player.launchProjectile(type.projectile, player.getLocation().getDirection().normalize().multiply(type.velocity));
         Vector velo = player.getLocation().getDirection();
         player.getWorld().playSound(player.getEyeLocation().add(velo.normalize()), Sound.ENTITY_GENERIC_EXPLODE, SoundCategory.PLAYERS, 0.3f, 2.0f);
         player.getWorld().spawnParticle(Particle.SMOKE_NORMAL, player.getEyeLocation().add(velo.normalize()), 8, 0.2, 0.2, 0.2, 0.0);
@@ -310,16 +312,19 @@ public final class BlunderbussItem implements CustomItem, UncraftableItem {
     }
 
     enum AmmoType {
-        ARROW(Material.ARROW, Arrow.class),
-        SNOW_BALL(Material.SNOW_BALL, Snowball.class),
-        EGG(Material.EGG, Egg.class),
-        IRON_NUGGET(Material.IRON_NUGGET, null),
-        GOLD_NUGGET(Material.GOLD_NUGGET, null);
+        ARROW(Material.ARROW, Arrow.class, 5),
+        SNOW_BALL(Material.SNOW_BALL, Snowball.class, 5),
+        EGG(Material.EGG, Egg.class, 5),
+        IRON_NUGGET(Material.IRON_NUGGET, null, 0),
+        GOLD_NUGGET(Material.GOLD_NUGGET, null, 0),
+        ENDER_PEARL(Material.ENDER_PEARL, EnderPearl.class, 2.5);
         public final Material material;
         public final Class<? extends Projectile> projectile;
-        AmmoType(Material material, Class<? extends Projectile> projectile) {
+        public final double velocity;
+        AmmoType(Material material, Class<? extends Projectile> projectile, double velocity) {
             this.material = material;
             this.projectile = projectile;
+            this.velocity = velocity;
         }
         ItemStack getItemStack(int amount) {
             return new ItemStack(material, amount);
