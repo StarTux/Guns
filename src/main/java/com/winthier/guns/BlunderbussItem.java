@@ -187,6 +187,7 @@ public final class BlunderbussItem implements CustomItem, UncraftableItem {
                         break;
                     case BEDROCK:
                     case BARRIER:
+                    case MOB_SPAWNER:
                         unbreakable = true;
                         break;
                     default:
